@@ -2,7 +2,6 @@ const PostsRepository = require("../repositories/posts.repository");
 
 const myError = require("../utils/error");
 
-// TODO: what to return on error?
 class PostsService {
   postsRepository = new PostsRepository();
 
@@ -17,6 +16,7 @@ class PostsService {
         userId: post.userId,
         nickname: post.nickname,
         title: post.title,
+        likes: post.likes,
         createdAt: post.createdAt,
         updatedAt: post.updatedAt,
       };
@@ -35,6 +35,8 @@ class PostsService {
       userId: post.userId,
       nickname: post.nickname,
       title: post.title,
+      content: post.content,
+      likes: post.likes,
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
     };

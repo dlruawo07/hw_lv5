@@ -1,4 +1,5 @@
 const { Users } = require("../models");
+
 const myError = require("../utils/error");
 
 class UsersRepository {

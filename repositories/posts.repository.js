@@ -44,6 +44,22 @@ class PostsRepository {
       throw myError(401, "게시글이 정상적으로 삭제되지 않았습니다.");
     });
   };
+
+  likeOrUnlikePost = async (postId, flag = null) => {
+    const post = findOnePost(postId);
+
+    if (!flag) {
+      await post.increment("likes", { by: 1 }).catch((err) => {
+        throw myError(400, "게시글의 좋아요 등록에 실패했습니다.");
+      });
+    } else {
+      await post.decrement("likes", { by: 1 }).catch((err) => {
+        throw myError(400, "게시글의 좋아요 취소에 실패했습니다.");
+      });
+    }
+  };
+
+  unlikePost = async (postId) => {};
 }
 
 module.exports = PostsRepository;

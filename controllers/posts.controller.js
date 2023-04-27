@@ -2,7 +2,6 @@ const PostsService = require("../services/posts.service");
 
 const myError = require("../utils/error");
 
-// TODO: how to return error?
 class PostsController {
   postsService = new PostsService();
 

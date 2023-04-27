@@ -1,6 +1,7 @@
 const UsersService = require("../services/users.service");
 
 const myError = require("../utils/error");
+
 class UsersController {
   usersService = new UsersService();
 

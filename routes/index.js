@@ -5,14 +5,14 @@ const authMiddleware = require("../middlewares/auth-middleware");
 
 const usersRouter = require("./users.routes");
 const postsRouter = require("./posts.routes");
-// const commentsRouter = require("./comments.routes");
+const commentsRouter = require("./comments.routes");
 // const likesRouter = require("./likes.routes");
 
 router.use("/", [usersRouter]);
 router.use("/posts", [
   authMiddleware,
   // likesRouter,
-  // commentsRouter,
+  commentsRouter,
   postsRouter,
 ]);
 
