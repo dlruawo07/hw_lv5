@@ -7,6 +7,9 @@ class PostsService {
 
   findAllPosts = async () => {
     const posts = await this.postsRepository.findAllPosts();
+    if (!posts.length) {
+      throw myError(404, "게시글이 존재하지 않습니다.");
+    }
 
     posts.sort((a, b) => b.createdAt - a.createdAt);
 
@@ -29,6 +32,9 @@ class PostsService {
 
   findOnePost = async (postId) => {
     const post = await this.postsRepository.findOnePost(postId);
+    if (!post) {
+      throw myError(404, "게시글이 존재하지 않습니다.");
+    }
 
     return {
       postId: post.postId,
@@ -44,8 +50,12 @@ class PostsService {
 
   updatePost = async (userId, postId, title, content) => {
     const post = await this.postsRepository.findOnePost(postId);
-    if (userId !== post.postId) {
-      throw myError(403, "게시글 수정의 권한이 존재하지 않습니다.");
+    if (!post) {
+      throw myError(404, "게시글이 존재하지 않습니다.");
+    }
+
+    if (userId !== post.userId) {
+      throw myError(403, "게시글 수정 권한이 존재하지 않습니다.");
     }
 
     await this.postsRepository.updatePost(userId, postId, title, content);
@@ -53,8 +63,12 @@ class PostsService {
 
   deletePost = async (userId, postId) => {
     const post = await this.postsRepository.findOnePost(postId);
-    if (userId !== post.postId) {
-      throw myError(403, "게시글 삭제의 권한이 존재하지 않습니다.");
+    if (!post) {
+      throw myError(404, "게시글이 존재하지 않습니다.");
+    }
+
+    if (userId !== post.userId) {
+      throw myError(403, "게시글 삭제 권한이 존재하지 않습니다.");
     }
 
     await this.postsRepository.deletePost(userId, postId);

@@ -5,7 +5,7 @@ class LikesService {
   postsRepository = new PostsRepository();
   likesRepository = new LikesRepository();
 
-  likeUnlike = async (userId, postId) => {
+  likeOrUnlike = async (userId, postId) => {
     const post = await this.postsRepository.findOnePost(postId);
     if (!post) {
       throw myError(404, "게시글이 존재하지 않습니다.");
@@ -22,6 +22,9 @@ class LikesService {
 
   getLikedPosts = async (userId) => {
     const posts = await this.likesRepository.getLikedPosts(userId);
+    if (!posts.length) {
+      throw myError(404, "게시글이 존재하지 않습니다.");
+    }
 
     posts.sort((a, b) => b.createdAt - a.createdAt);
 

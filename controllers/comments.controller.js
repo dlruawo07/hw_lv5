@@ -22,6 +22,10 @@ class CommentsController {
       const { userId, nickname } = res.locals.user;
       const { comment } = req.body;
 
+      if (!comment || comment === "") {
+        throw myError(412, "데이터 형식이 올바르지 않습니다.");
+      }
+
       await this.commentsService.createComment(
         postId,
         userId,
@@ -75,7 +79,6 @@ class CommentsController {
 
       res.status(200).json({ message: "댓글을 삭제했습니다." });
     } catch (err) {
-      console.log(err);
       if (!err.statusCode) {
         res.status(400).json({ errorMessage: "댓글 삭제에 실패했습니다." });
       } else {
