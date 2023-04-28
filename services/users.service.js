@@ -8,7 +8,6 @@ class UsersService {
   usersRepository = new UsersRepository();
 
   signup = async (nickname, password, confirm) => {
-    // try {
     if (!/^[a-zA-Z0-9]{3,}/.test(nickname)) {
       throw myError(412, "닉네임의 형식이 일치하지 않습니다.");
     }
@@ -35,7 +34,6 @@ class UsersService {
 
   login = async (res, nickname, password) => {
     const user = await this.usersRepository.findUser(nickname);
-
     if (!user) {
       throw myError(412, "닉네임 또는 패스워드를 확인해주세요.");
     }

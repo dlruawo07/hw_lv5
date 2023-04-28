@@ -45,8 +45,10 @@ class PostsRepository {
     });
   };
 
-  likeOrUnlikePost = async (postId, flag = null) => {
-    const post = findOnePost(postId);
+  likeOrUnlikePost = async (postId, flag) => {
+    const post = await Posts.findOne({ where: { postId } }).catch((err) => {
+      throw myError(400, "게시글 조회에 실패했습니다.");
+    });
 
     if (!flag) {
       await post.increment("likes", { by: 1 }).catch((err) => {

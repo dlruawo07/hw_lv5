@@ -9,6 +9,7 @@ class LikesRepository {
         throw myError(400, "게시글 좋아요에 실패했습니다.");
       }
     );
+
     return like;
   };
 

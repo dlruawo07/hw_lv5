@@ -8,7 +8,7 @@ class LikesController {
       const { userId } = res.locals.user;
       const { postId } = req.params;
 
-      const message = await this.likesService.likeUnlike(userId, postId);
+      const message = await this.likesService.likeOrUnlike(userId, postId);
 
       res.status(200).json({ message });
     } catch (err) {

@@ -24,6 +24,16 @@ class CommentsRepository {
     });
   };
 
+  findOneComment = async (commentId) => {
+    const comment = await Comments.findOne({ where: { commentId } }).catch(
+      (err) => {
+        throw myError(400, "댓글 조회에 실패했습니다.");
+      }
+    );
+
+    return comment;
+  };
+
   updateComment = async (userId, commentId, comment) => {
     await Comments.update(
       { comment, updatedAt: new Date() },
