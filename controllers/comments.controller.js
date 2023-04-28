@@ -12,7 +12,11 @@ class CommentsController {
 
       res.status(200).json({ comments });
     } catch (err) {
-      res.status(err.statusCode).json({ errorMessage: err.message });
+      if (!err.statusCode) {
+        res.status(400).json({ errorMessage: "댓글 조회에 실패했습니다." });
+      } else {
+        res.status(err.statusCode).json({ errorMessage: err.message });
+      }
     }
   };
 
@@ -35,7 +39,11 @@ class CommentsController {
 
       res.status(201).json({ message: "댓글을 작성했습니다." });
     } catch (err) {
-      res.status(err.statusCode).json({ errorMessage: err.message });
+      if (!err.statusCode) {
+        res.status(400).json({ errorMessage: "댓글 작성에 실패했습니다." });
+      } else {
+        res.status(err.statusCode).json({ errorMessage: err.message });
+      }
     }
   };
 

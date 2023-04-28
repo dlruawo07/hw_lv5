@@ -11,7 +11,11 @@ class PostsController {
 
       res.status(200).json({ posts });
     } catch (err) {
-      res.status(err.statusCode).json({ errorMessage: err.message });
+      if (!err.statusCode) {
+        res.status(400).json({ errorMessage: "게시글 조회에 실패했습니다." });
+      } else {
+        res.status(err.statusCode).json({ errorMessage: err.message });
+      }
     }
   };
 
@@ -35,7 +39,11 @@ class PostsController {
 
       res.status(201).json({ message: "게시글을 작성했습니다." });
     } catch (err) {
-      res.status(err.statusCode).json({ errorMessage: err.message });
+      if (!err.statusCode) {
+        res.status(400).json({ errorMessage: "게시글 작성에 실패했습니다." });
+      } else {
+        res.status(err.statusCode).json({ errorMessage: err.message });
+      }
     }
   };
 
@@ -47,7 +55,11 @@ class PostsController {
 
       res.status(200).json({ post });
     } catch (err) {
-      res.status(err.statusCode).json({ errorMessage: err.message });
+      if (!err.statusCode) {
+        res.status(400).json({ errorMessage: "게시글 조회에 실패했습니다." });
+      } else {
+        res.status(err.statusCode).json({ errorMessage: err.message });
+      }
     }
   };
 

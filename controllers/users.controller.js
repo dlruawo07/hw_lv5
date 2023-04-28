@@ -8,7 +8,7 @@ class UsersController {
   signup = async (req, res, next) => {
     try {
       if (Object.keys(req.body).length !== 3) {
-        throw myError(400, "요청한 데이터 형식이 올바르지 않습니다.");
+        throw Error();
       }
 
       const { nickname, password, confirm } = req.body;
@@ -17,14 +17,20 @@ class UsersController {
 
       res.status(201).json({ message: "회원가입이 완료됐습니다." });
     } catch (err) {
-      return res.status(err.statusCode).json({ errorMessage: err.message });
+      if (!err.statusCode) {
+        res
+          .status(400)
+          .json({ errorMessage: "요청한 데이터 형식이 올바르지 않습니다." });
+      } else {
+        res.status(err.statusCode).json({ errorMessage: err.message });
+      }
     }
   };
 
   login = async (req, res, next) => {
     try {
       if (Object.keys(req.body).length !== 2) {
-        throw myError(400, "로그인에 실패했습니다.");
+        throw Error();
       }
 
       const { nickname, password } = req.body;
@@ -33,7 +39,11 @@ class UsersController {
 
       res.status(200).json({ token });
     } catch (err) {
-      return res.status(err.statusCode).json({ errorMessage: err.message });
+      if (!err.statusCode) {
+        res.status(400).json({ errorMessage: "로그인에 실패했습니다." });
+      } else {
+        res.status(err.statusCode).json({ errorMessage: err.message });
+      }
     }
   };
 }

@@ -12,7 +12,13 @@ class LikesController {
 
       res.status(200).json({ message });
     } catch (err) {
-      res.status(err.statusCode).json({ errorMessage: err.message });
+      if (!err.statusCode) {
+        res
+          .status(400)
+          .json({ errorMessage: "게시글 좋아요 등록에 실패했습니다." });
+      } else {
+        res.status(err.statusCode).json({ errorMessage: err.message });
+      }
     }
   };
 
@@ -24,7 +30,11 @@ class LikesController {
 
       res.status(200).json({ posts });
     } catch (err) {
-      res.status(err.statusCode).json({ errorMessage: err.message });
+      if (!err.statusCode) {
+        res.status(400).json({ errorMessage: "게시글 조회에 실패했습니다." });
+      } else {
+        res.status(err.statusCode).json({ errorMessage: err.message });
+      }
     }
   };
 }
