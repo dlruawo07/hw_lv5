@@ -6,6 +6,7 @@ class PostsService {
   postsRepository = new PostsRepository();
 
   findAllPosts = async () => {
+    console.log("FIND ALL POSTS");
     const posts = await this.postsRepository.findAllPosts();
     if (!posts.length) {
       throw myError(404, "게시글이 존재하지 않습니다.");
