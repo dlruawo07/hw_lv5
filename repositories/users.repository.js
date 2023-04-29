@@ -7,12 +7,22 @@ class UsersRepository {
     });
   };
 
-  findUser = async (nickname) => {
-    const user = await Users.findOne({ where: { nickname } }).catch((err) => {
-      throw new Error();
-    });
-
-    return user;
+  findUser = async (value) => {
+    if (Number.isInteger(value)) {
+      const user = await Users.findOne({ where: { userId: value } }).catch(
+        (err) => {
+          throw new Error();
+        }
+      );
+      return user;
+    } else {
+      const user = await Users.findOne({ where: { nickname: value } }).catch(
+        (err) => {
+          throw new Error();
+        }
+      );
+      return user;
+    }
   };
 }
 

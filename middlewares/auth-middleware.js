@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 
 const myError = require("../utils/error");
-const { Users } = require("../models/");
+const UsersRepository = require("../repositories/users.repository");
+
+const usersRepository = new UsersRepository();
 
 module.exports = async (req, res, next) => {
   const { Authorization } = req.cookies;
@@ -19,8 +21,7 @@ module.exports = async (req, res, next) => {
     // 2. authToken이 서버가 발급한 토큰이 맞는지
     const { userId } = jwt.verify(authToken, "hh99-secret-key");
 
-    // TODO: UsersRepository 메소드로 하는 방법
-    const user = await Users.findOne({ where: { userId } });
+    const user = await usersRepository.findUser(userId);
 
     // 3. authToken에 있는 userId에 해당하는 사용자가 실제 DB에 있는지
     if (!user) throw new Error();
