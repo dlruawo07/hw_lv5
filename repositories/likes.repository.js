@@ -1,12 +1,10 @@
 const { Likes, Posts } = require("../models");
 
-const myError = require("../utils/error");
-
 class LikesRepository {
   checkLike = async (userId, postId) => {
     const like = await Likes.findOne({ where: { userId, postId } }).catch(
       (err) => {
-        throw myError(400, "게시글 좋아요에 실패했습니다.");
+        throw new Error();
       }
     );
 
@@ -16,11 +14,11 @@ class LikesRepository {
   likeOrUnlike = async (postId, userId, flag) => {
     if (!flag) {
       await Likes.create({ userId, postId }).catch((err) => {
-        throw myError(400, "게시글 좋아요에 실패했습니다.");
+        throw new Error();
       });
     } else {
       await Likes.destroy({ where: { userId, postId } }).catch((err) => {
-        throw myError(400, "게시글 좋아요에 실패했습니다.");
+        throw new Error();
       });
     }
   };

@@ -11,11 +11,8 @@ class PostsController {
 
       res.status(200).json({ posts });
     } catch (err) {
-      if (!err.statusCode) {
-        res.status(400).json({ errorMessage: "게시글 조회에 실패했습니다." });
-      } else {
-        res.status(err.statusCode).json({ errorMessage: err.message });
-      }
+      err.failedApi = "게시글 조회";
+      next(err);
     }
   };
 
@@ -39,11 +36,8 @@ class PostsController {
 
       res.status(201).json({ message: "게시글을 작성했습니다." });
     } catch (err) {
-      if (!err.statusCode) {
-        res.status(400).json({ errorMessage: "게시글 작성에 실패했습니다." });
-      } else {
-        res.status(err.statusCode).json({ errorMessage: err.message });
-      }
+      err.failedApi = "게시글 작성";
+      next(err);
     }
   };
 
@@ -55,11 +49,8 @@ class PostsController {
 
       res.status(200).json({ post });
     } catch (err) {
-      if (!err.statusCode) {
-        res.status(400).json({ errorMessage: "게시글 조회에 실패했습니다." });
-      } else {
-        res.status(err.statusCode).json({ errorMessage: err.message });
-      }
+      err.failedApi = "게시글 조회";
+      next(err);
     }
   };
 
@@ -85,11 +76,8 @@ class PostsController {
 
       res.status(200).json({ message: "게시글을 수정했습니다." });
     } catch (err) {
-      if (!err.statusCode) {
-        res.status(400).json({ errorMessage: "게시글 수정에 실패했습니다." });
-      } else {
-        res.status(err.statusCode).json({ errorMessage: err.message });
-      }
+      err.failedApi = "게시글 수정";
+      next(err);
     }
   };
 
@@ -102,11 +90,8 @@ class PostsController {
 
       res.status(200).json({ message: "게시글을 삭제했습니다." });
     } catch (err) {
-      if (!err.statusCode) {
-        res.status(400).json({ errorMessage: "게시글 삭제에 실패했습니다." });
-      } else {
-        res.status(err.statusCode).json({ errorMessage: err.message });
-      }
+      err.failedApi = "게시글 삭제";
+      next(err);
     }
   };
 }

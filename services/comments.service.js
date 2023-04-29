@@ -1,7 +1,6 @@
+const myError = require("../utils/error");
 const PostsRepository = require("../repositories/posts.repository");
 const CommentsRepository = require("../repositories/comments.repository");
-
-const myError = require("../utils/error");
 
 class CommentsService {
   postsRepository = new PostsRepository();

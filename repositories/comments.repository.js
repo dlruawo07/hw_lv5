@@ -1,12 +1,11 @@
-const { Comments } = require("../models");
-
 const myError = require("../utils/error");
+const { Comments } = require("../models");
 
 class CommentsRepository {
   findAllComments = async (postId) => {
     const comments = await Comments.findAll({ where: { postId } }).catch(
       (err) => {
-        throw myError(400, "댓글 조회에 실패했습니다.");
+        throw new Error();
       }
     );
 
@@ -20,14 +19,14 @@ class CommentsRepository {
       nickname,
       comment,
     }).catch((err) => {
-      throw myError(400, "댓글 작성에 실패했습니다.");
+      throw new Error();
     });
   };
 
   findOneComment = async (commentId) => {
     const comment = await Comments.findOne({ where: { commentId } }).catch(
       (err) => {
-        throw myError(400, "댓글 조회에 실패했습니다.");
+        throw new Error();
       }
     );
 

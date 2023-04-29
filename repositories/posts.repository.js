@@ -1,11 +1,10 @@
-const { Posts } = require("../models");
-
 const myError = require("../utils/error");
+const { Posts } = require("../models");
 
 class PostsRepository {
   findAllPosts = async () => {
     const posts = await Posts.findAll().catch((err) => {
-      throw myError(400, "게시글 조회에 실패했습니다.");
+      throw new Error();
     });
 
     return posts;
@@ -18,13 +17,13 @@ class PostsRepository {
       title,
       content,
     }).catch((err) => {
-      throw myError(400, "게시글 작성에 실패했습니다.");
+      throw new Error();
     });
   };
 
   findOnePost = async (postId) => {
     const post = await Posts.findOne({ where: { postId } }).catch((err) => {
-      throw myError(400, "게시글 조회에 실패했습니다.");
+      throw new Error();
     });
 
     return post;
@@ -47,21 +46,19 @@ class PostsRepository {
 
   likeOrUnlikePost = async (postId, flag) => {
     const post = await Posts.findOne({ where: { postId } }).catch((err) => {
-      throw myError(400, "게시글 조회에 실패했습니다.");
+      throw new Error();
     });
 
     if (!flag) {
       await post.increment("likes", { by: 1 }).catch((err) => {
-        throw myError(400, "게시글의 좋아요 등록에 실패했습니다.");
+        throw new Error();
       });
     } else {
       await post.decrement("likes", { by: 1 }).catch((err) => {
-        throw myError(400, "게시글의 좋아요 취소에 실패했습니다.");
+        throw new Error();
       });
     }
   };
-
-  unlikePost = async (postId) => {};
 }
 
 module.exports = PostsRepository;

@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 const UsersRepository = require("../repositories/users.repository");
-
 const myError = require("../utils/error");
 
 class UsersService {

@@ -1,7 +1,5 @@
 const UsersService = require("../services/users.service");
 
-const myError = require("../utils/error");
-
 class UsersController {
   usersService = new UsersService();
 
@@ -17,13 +15,8 @@ class UsersController {
 
       res.status(201).json({ message: "회원가입이 완료됐습니다." });
     } catch (err) {
-      if (!err.statusCode) {
-        res
-          .status(400)
-          .json({ errorMessage: "요청한 데이터 형식이 올바르지 않습니다." });
-      } else {
-        res.status(err.statusCode).json({ errorMessage: err.message });
-      }
+      err.failedApi = "회원가입";
+      next(err);
     }
   };
 
@@ -39,11 +32,8 @@ class UsersController {
 
       res.status(200).json({ token });
     } catch (err) {
-      if (!err.statusCode) {
-        res.status(400).json({ errorMessage: "로그인에 실패했습니다." });
-      } else {
-        res.status(err.statusCode).json({ errorMessage: err.message });
-      }
+      err.failedApi = "로그인";
+      next(err);
     }
   };
 }
